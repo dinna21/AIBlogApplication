@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+@import "tailwindcss";
+
+*{
+  font-family: 'outfit', sans-serif;
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+@theme {
+  --color-primary: #5044E5;
+}
