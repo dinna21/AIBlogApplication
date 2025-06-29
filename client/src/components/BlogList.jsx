@@ -1,7 +1,8 @@
 import React, { use } from 'react'
-import { blogCategories } from '../assets/assets'
+import { blog_data, blogCategories } from '../assets/assets'
 import { useState } from 'react'
 import { motion } from "motion/react"
+import Blogcard from './Blogcard';
 
 export default function BlogList() {
     const [menu,setMenu] = useState('All');
@@ -24,8 +25,8 @@ export default function BlogList() {
                 </div>
             ))}
         </div> 
-        <div>
-            {/* blog - cards */}
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 mb-24 mx-8 xl:mx-20'>
+            {blog_data.filter((blog) => menu === 'All' ? true : blog.category === menu).map((blog) => <Blogcard key={blog._id} blog={blog} />)}
         </div>
     </div>
   )
