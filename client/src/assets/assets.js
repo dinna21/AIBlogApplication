@@ -242,18 +242,35 @@ export const dashboard_data = {
     "drafts": 0,
     "recentBlogs": blog_data.slice(0, 5),
 }
-
+// assets.js
 export const footer_data = [
-      {
-          title: "Quick Links",
-          links: ["Home", "Best Sellers", "Offers & Deals", "Contact Us", "FAQs"]
-      },
-      {
-          title: "Need Help?",
-          links: ["Delivery Information", "Return & Refund Policy", "Payment Methods", "Track your Order", "Contact Us"]
-      },
-      {
-          title: "Follow Us",
-          links: ["Instagram", "Twitter", "Facebook", "YouTube"]
-      }
-  ];
+  {
+    title: "Quick Links",
+    links: [
+      { name: "Home", url: "/" },
+      { name: "Best Sellers", url: "/best-sellers" },
+      { name: "Offers & Deals", url: "/offers" },
+      { name: "Contact Us", url: "/contact" },
+      { name: "FAQs", url: "/faqs" },
+    ],
+  },
+  {
+    title: "Need Help?",
+    links: [
+      { name: "Delivery Information", url: "/delivery" },
+      { name: "Return & Refund Policy", url: "/returns" },
+      { name: "Payment Methods", url: "/payment" },
+      { name: "Track your Order", url: "/track-order" },
+      { name: "Contact Us", url: "/contact" },
+    ],
+  },
+  {
+    title: "Follow Us",
+    links: [
+      { name: "Instagram", url: "https://instagram.com" },
+      { name: "Twitter", url: "https://twitter.com" },
+      { name: "Facebook", url: "https://facebook.com" },
+      { name: "YouTube", url: "https://youtube.com" },
+    ],
+  },
+];
