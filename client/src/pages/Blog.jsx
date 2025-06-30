@@ -8,6 +8,7 @@ import Moment from 'moment';
 export default function Blog() {
   const { id } = useParams();
   const [data, setData] = useState(null);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const fetchBlogData = async () => {
@@ -32,7 +33,14 @@ export default function Blog() {
         <div className='rich-text max-w-3xl md:mx-auto my-10 mt-6' dangerouslySetInnerHTML={{__html: data.description}}>
         </div>
 
-        
+        {/* Commets section */}
+        <div className='mt-14 mb-10 max-w-3xl mx:auto'>
+          <p>
+
+          </p>
+        </div>
+
+
       </div>
     </div>
   ) : (
