@@ -77,7 +77,15 @@ export default function Blog() {
           <button type='submit' className='bg-primary text-white rounded p-2 px-8 hover:scale-102 transition-all cursor-pointer'>Submit</button>
         </form>
       </div>
-      <div></div>
+      {/* Share Buttons  */}
+      <div className='my-24 max-w-3xl mx-auto'>
+        <p className='font-semibold pm-4'>Share This Article in Social Media</p>
+        <div className='flex'>
+          <img src={assets.facebook_icon} alt="" />
+          <img src={assets.twitter_icon} alt="" />
+          <img src={assets.googleplus_icon} alt="" />
+        </div>
+      </div>
       </div>
     </div>
   ) : (
