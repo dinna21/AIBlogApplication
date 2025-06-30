@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { assets, blog_data } from '../assets/assets';
+import { assets, blog_data, comments_data } from '../assets/assets';
 import Navbar from '../components/Navbar';
 import Moment from 'moment';
+
 
 
 export default function Blog() {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    const fetchBlogData = async () => {
+  const fetchBlogData = async () => {
       const found = blog_data.find(item => item._id === id);
       setData(found);
     };
-    fetchBlogData();
-  }, [id]); // depend on `id` so it runs when route changes
+    const fetchComments = async () => {
+      setComments(comments_data)
+    };
+    // depend on `id` so it runs when route changes
+    useEffect(() => {
+      fetchBlogData();
+      fetchComments();
+    }, [id]);
   return data ? (
     <div className='relative'>
       <img src={assets.gradientBackground} className='absolute -top-50 -z-1 opacity-50' alt="" />
@@ -35,9 +40,20 @@ export default function Blog() {
 
         {/* Commets section */}
         <div className='mt-14 mb-10 max-w-3xl mx:auto'>
-          <p>
-
-          </p>
+          <p className='font-semibold mb-5'>Comments {comments.length}</p>
+          <div className='flex flex-col gap-4'>
+            {comments.map((item, index) => (
+              <div key={index} className='relative bg-primary/2 border border-primary/5 max-w-xl p-4 rounded text-gray-600'>
+                <div className='flex items-center gap-3 mb-2'>
+                  <img className='w-6' src={assets.user_icon} alt="" />
+                  <p className='font-medium'>{item.name}</p>
+                  <p className='text-sm max-w-md ml-8'>{item.content}</p>
+                  <div className='absolute right-4 bottom-3 flex items-center gap-2 text-xs'>{Moment(item.createdAt).format('MMMM Do YYYY')}</div>
+                </div>
+              </div>
+            ))
+          }
+          </div>
         </div>
 
 
