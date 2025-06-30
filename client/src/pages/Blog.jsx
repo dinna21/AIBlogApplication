@@ -10,13 +10,25 @@ export default function Blog() {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
+  const [name, setName] = useState('');
+  const [comment, setComment] = useState([]);
   const fetchBlogData = async () => {
       const found = blog_data.find(item => item._id === id);
       setData(found);
     };
-    const fetchComments = async () => {
+  const fetchComments = async () => {
       setComments(comments_data)
     };
+  const addComment = (e) => {
+      e.preventDefault();
+      // const name = e.target[0].value;
+      // const content = e.target[1].value;
+      // const newComment = {
+      //   name,
+      //   content,
+      //   createdAt: new Date().toISOString(),
+      // };
+  }
     // depend on `id` so it runs when route changes
     useEffect(() => {
       fetchBlogData();
@@ -56,7 +68,16 @@ export default function Blog() {
           </div>
         </div>
 
-
+      {/* Add the Commeebt Section  */}
+      <div className='max-w-3xl mx-auto'>
+        <p className='font-semibold mb-4 '> Add Your Comment </p>
+        <form onSubmit={addComment} className='flex flex-col items-start gap-4 max-w-lg'>
+          <input onChange={() => setName(e.target.value)} value={name} type="text" className='w-full p-2 border border-gray-300 rounded outline-none' required placeholder='Name' />
+          <textarea onChange={() => setComment(e.target.value)} value={name}  required className='w-full p-2 border border-gray-300 rounded outline-none h-48 ' placeholder='Comment'></textarea>
+          <button type='submit' className='bg-primary text-white rounded p-2 px-8 hover:scale-102 transition-all cursor-pointer'>Submit</button>
+        </form>
+      </div>
+      <div></div>
       </div>
     </div>
   ) : (
