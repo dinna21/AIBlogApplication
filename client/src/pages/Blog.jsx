@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { assets, blog_data, comments_data } from '../assets/assets';
 import Navbar from '../components/Navbar';
 import Moment from 'moment';
+import footer from '../components/Footer';
+import Footer from '../components/Footer';
 
 
 
@@ -87,6 +89,7 @@ export default function Blog() {
         </div>
       </div>
       </div>
+      <Footer />
     </div>
   ) : (
     <div>Loading…</div>
