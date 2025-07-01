@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Moment from 'moment';
 import footer from '../components/Footer';
 import Footer from '../components/Footer';
+import Loader from '../components/Loader';
 
 
 
@@ -74,7 +75,7 @@ export default function Blog() {
       <div className='max-w-3xl mx-auto'>
         <p className='font-semibold mb-4 '> Add Your Comment </p>
         <form onSubmit={addComment} className='flex flex-col items-start gap-4 max-w-lg'>
-          <input onChange={() => setName(e.target.value)} value={name} type="text" className='w-full p-2 border border-gray-300 rounded outline-none' required placeholder='Name' />
+          <input onChange={() => setName(e.target.value)} value={name} type="text" className='w-full p-2 border border-gray-300 rounded outline-none ' required placeholder='Name' />
           <textarea onChange={() => setComment(e.target.value)} value={name}  required className='w-full p-2 border border-gray-300 rounded outline-none h-48 ' placeholder='Comment'></textarea>
           <button type='submit' className='bg-primary text-white rounded p-2 px-8 hover:scale-102 transition-all cursor-pointer'>Submit</button>
         </form>
@@ -92,6 +93,6 @@ export default function Blog() {
       <Footer />
     </div>
   ) : (
-    <div>Loading…</div>
+    <Loader />
   );
 }
