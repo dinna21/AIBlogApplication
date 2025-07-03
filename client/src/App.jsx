@@ -7,6 +7,7 @@ import Addblog from './pages/admin/Addblog'
 import ListBlog from './pages/admin/ListBlog'
 import Comments from './pages/admin/Comments'
 import Dashboard from './pages/admin/Dashboard'
+import Login from './components/admin/Login'
 
 
 export default function App() {
@@ -15,10 +16,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog/:id" element={<Blog />} />
-        <Route path="/admin" element={<Layout />}>
+        <Route path="/admin" element={false ? <Layout />: <Login />}>
           <Route path="addBlog" element={<Addblog />} />
           <Route path="ListBlog" element={<ListBlog />} />
           <Route path="comments" element={<Comments />} />
+
         </Route>
       </Routes>
     </div>
