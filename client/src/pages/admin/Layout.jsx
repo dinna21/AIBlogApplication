@@ -17,7 +17,7 @@ export default function Layout() {
 
         <div className='flex h-[calc(100vh-70px)]'>
             <Sidebar />
-            {/* <Outlet /> */}
+            <Outlet />
             {/* add the child elements in the app.jsx file  */}
         </div>
     </>
