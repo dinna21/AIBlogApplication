@@ -13,6 +13,8 @@ function BlogTableItems({blog,fetchBlogs,index}) {
             <p className={`${blog.isPublished ? 'text-green-600' : 'text-orange-700'}`}
             >{blog.isPublished ? 'Published' : 'UnPublished'}</p>    
         </td> 
+
+        
         <td className='px-2 py-4 flex text-xs gap-3'>
         <button className='border px-2 *:py-0.5 mt-1 rounded cursor-pointer'
         >{blog.isPublished ? 'Published' : 'UnPublished'}</button>
