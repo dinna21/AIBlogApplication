@@ -7,8 +7,11 @@ export default function Addblog() {
   const [subTitle,setSubTitle] = useState('')
   const [catogery,setCatogery] = useState('Startup')
   const [isPublished,setIspublished] = useState(false)
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+  }
   return (
-    <form action="" className='flex-1 bg-blue-50/50 text-gray-600 h-full overflow-scroll'>
+    <form  onSubmit={onSubmitHandler} action="" className='flex-1 bg-blue-50/50 text-gray-600 h-full overflow-scroll'>
       <div className='bg-white w-full max-w-3xl p-4 md:p-10 shadow rounded '>
         <p>Upload Thubnail</p>
         <label htmlFor="image">
