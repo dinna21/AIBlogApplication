@@ -18,6 +18,9 @@ export default function Addblog() {
           <img src={!image ? assets.upload_area : URL.createObjectURL(image) }  alt="" className='mt-2 h-16 rounded cursor-pointer' />
           <input onChange={(e) => setImage(e.target.files[0])} type="file" id='image' hidden required />
         </label>
+        <p className='mt-4'>Blog Title</p>
+        <input type="text" placeholder='Type Here ' required className='w-full max-w-lg mt-2 p-2 border-gray-300 outline-none rounded' onChange={e=>setTitle(e.target.value)} value={title} />
+
       </div>
     </form>
   )
