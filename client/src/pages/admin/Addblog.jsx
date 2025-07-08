@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { assets } from '../../assets/assets'
+import { assets, blogCategories } from '../../assets/assets'
 import Quill from 'quill'
 export default function Addblog() {
   const editorRef = useRef(null)
@@ -43,7 +43,13 @@ export default function Addblog() {
               </div>
               <button type='button' className='absolute bottom-1 right-2 ml-2 text-xs text-white bg-black/70 px-4 py-1.5 rounded hover:underline cursor-pointer' onClick={generateContent}>Generate With AI</button>
         </div>
-        
+        <p className='mt-4'>Blog Category</p>
+        <select className='mt-2 px-3 py-2 border border-gray-300 text-gray-500 outline-none rounded' onChange={e => setCatogery(e.target.value)} name="category" id="">
+          <option value="">Select category</option>
+          {blogCategories.map((item,index) => {
+              return <option key={index} value={item}>{item}</option>
+          })}
+        </select>
       </div>
     </form>
   )
