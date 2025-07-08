@@ -50,6 +50,11 @@ export default function Addblog() {
               return <option key={index} value={item}>{item}</option>
           })}
         </select>
+        <div className='flex gap-2 mt-4'>
+          <p>Publish Now</p>
+          <input type="checkbox" checked={isPublished} className='scale-125 cursor-pointer' onChange={e=> setIspublished(e.target.checked)} />
+        </div>
+        <button className='mt-8 w-40 h-10 bg-primary text-white rounded cursor-pointer text-sm' type='submit'>Add Blog </button>
       </div>
     </form>
   )
