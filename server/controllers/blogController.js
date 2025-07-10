@@ -17,6 +17,16 @@ export const addBlog = async ()=>{
         fileName: imageFile.originalname,
         folder: "/blogs"
     })
+    //Optimization through iamgekit URL transformation 
+    const OptimizationImageURL = imagekit.url({
+        path: responese.filePath,
+        transformation:[
+            {quality: 'auto'},//auto comprssion 
+            {format: 'webp'},// convert to modern format 
+            {width: '1280'} // width resizing 
+        ]
+    })
+
     } catch (error) {
         
     }
