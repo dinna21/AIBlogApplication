@@ -7,6 +7,7 @@ export const addBlog = async ()=>{
         {
             return res.json({success: false, message: "Missing Required Fields"})
         }
+    //Now we are going to host boog images in the cloud platform and add the url in the mongodb
     } catch (error) {
         
     }
