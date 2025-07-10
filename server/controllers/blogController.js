@@ -1,5 +1,6 @@
 import fs from 'fs';
 import imagekit from '../configs/imageKit.js';
+import blog from '../models/Blog.js'
 export const addBlog = async ()=>{
     try {
         const {title,subtitle,description,category,isPublished} = JSON.parse(req.body,blog);
@@ -25,9 +26,14 @@ export const addBlog = async ()=>{
             {format: 'webp'},// convert to modern format 
             {width: '1280'} // width resizing 
         ]
-    })
+    });
+    const image = OptimizationImageURL;
+
+    await blog.create({title, subtitle, description, category, image})
+    res.json({success:true, message: "Blog added Successfully"});
+
 
     } catch (error) {
-        
+        res.json({success: false, message: error.message})
     }
 }
