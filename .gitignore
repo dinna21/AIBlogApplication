@@ -29,3 +29,8 @@ dist-ssr
 *.webp
 *.svg
 *.ico
+# Environment variables
+*.env
+.env.local
+.env.development
+.env.production
