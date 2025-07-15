@@ -6,7 +6,6 @@ import auth from "../middleware/auth.js";
 const blogRouter = express.Router();
 
 // Correct middleware order:
-blogRouter.post("/add",upload.single('image'),auth,addBlog);
-
+blogRouter.post("/add", auth, upload.single("image"), addBlog);
 export default blogRouter;
 
