@@ -5,55 +5,70 @@ import { error } from "console";
 
 export const addBlog = async (req, res) => {
   try {
-    const { title, subTitle, description, category, isPublished } = JSON.parse(req.body.blog);
+    console.log("=== Incoming Blog Upload ===");
+    console.log("req.body:", req.body);
+    console.log("req.file:", req.file);
+    const {title,subTitle,description,category,isPublished} = JSON.parse(req.body.blog);
     const imageFile = req.file;
 
-    // Validate all required fields
-    if (!title || !description || !category || !imageFile) {
-      return res.json({
-        success: false, message: "Missing Required Fields"
+    if (!imageFile) {
+      return res.status(400).json({
+        success: false,
+        message: "No image file uploaded",
       });
     }
 
-    // Read image from disk
+    if (!title || !description || !category) {
+      return res.json({success: false, message: "Missing required fields" })
+    }
+
     const fileBuffer = fs.readFileSync(imageFile.path);
 
-    // Upload to ImageKit
-    const response = await imagekit.upload({
-      file: fileBuffer,
-      fileName: imageFile.originalname,
-      folder: "/blogs",
-    });
-
-    // Optimized URL
-    const optimizedImageURL = imagekit.url({
+    //Upload Image to ImageKit
+    const response = await imagekit.upload(
+      {
+        file: fileBuffer,
+        fileName: imageFile.originalname,
+        folder: "/blogs"
+      })
+    const optimizedImageUrl = imagekit.url({
       path: response.filePath,
       transformation: [
-        { quality: "auto" },
-        { format: "webp" },
-        { width: "1280" },
+        {quality: 'auto'},
+        {format: 'webp'},
+        {width: '1280'}
       ]
     });
-    const image = optimizedImageURL;
-    // Create blog
-    const blog = await Blog.create({
-      title,
-      subTitle,
-      description,
-      category,
-      image,
-      isPublished
-    });
-    res.json({
-        success: true, message: "Blog Added Successfully....."
+
+    const image = optimizedImageUrl;
+    await Blog.create({title,subTitle,description,category,image,isPublished});
+
+    res.json({success: true, message: "Blog Added Successfully"});
+
+    return res.status(200).json({
+      success: true,
+      message: "Image received successfully",
+      fileInfo: {
+        filename: imageFile.filename,
+        originalname: imageFile.originalname,
+        mimetype: imageFile.mimetype,
+        path: imageFile.path
+      }
     });
 
   } catch (err) {
-    res.json({
-      success: false, message: error.message
-    });
+    console.error("❌ Upload Error:", err);
+    res.status(500).json({ success: false, message: err.message });
   }
 };
+
+
+
+
+
+
+
+
 
 export const getAllBlogs =  async(req,res)=>{
   try {
