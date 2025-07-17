@@ -130,3 +130,14 @@ export const addComment = async (req, res) => {
   }
 }
 
+
+export const getBlogComments = async (req, res) => {
+  try {
+    const {blogID} = req.body;
+    const comments = await Comment.find({blog: blogID, isApproved: true }).sort({createdAt: -1});
+    res.json({success: true, comments});
+  } catch (error) {
+    res.json({success: false, message: error.message})
+  }
+
+}
