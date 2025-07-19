@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
 import Blog from "../models/Blog.js";
 import { Component } from "react";
+import Comment from "../models/Comment.js";
 export const adminLogin = async (req,res) => {
     try {
         const {email,password} = req.body;
@@ -37,7 +38,7 @@ export const getDashboard = async (req,res)=>{
     try {
         const recentBlogs = await Blog.find({}).sort({createdAt: -1}).limit(5);
         const blogs = await Blog.countDocuments();
-        const comments = await Component.countDocuments();
+        const comments = await Comment.countDocuments();
         const drafts = await Blog.countDocuments({isPublished: false});
         const dashBoardData = {
             blogs,comments,drafts, recentBlogs
