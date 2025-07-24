@@ -16,14 +16,14 @@ export const AppProvider = ({ children }) =>{
     const fetchBlogs = async () =>
     {
         try {
-            const response = await axios.get("/api/blog/all");
-            if (response.data.success) {
-                setBlogs(response.data.blogs);
+            const {data} = await axios.get("/api/blog/all");
+            if (data.success) {
+                setBlogs(data.blogs);
             } else {
-                toast.error(response.data.message);
+                toast.error(data.message);
             }
         } catch (error) {
-            toast.error(error.message);
+            toast.error(data.message);
         }
     }
     useEffect(() => {
@@ -31,7 +31,7 @@ export const AppProvider = ({ children }) =>{
         const token = localStorage.getItem("token");
         if (token) {
             setToken(token);
-            axios.defaults.headers.common["Authorization"] = ` ${token}`;
+            axios.defaults.headers.common["Authorization"] = `${token}`;
         }
 
     }, []);
@@ -42,7 +42,7 @@ export const AppProvider = ({ children }) =>{
     }
 
     return (
-        <AppContext.Provider value={{}}>
+        <AppContext.Provider value={{value}}>
             {children}
         </AppContext.Provider>
     );
