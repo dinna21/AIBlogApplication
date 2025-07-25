@@ -13,6 +13,10 @@ export default function Header() {
     setInput(inputRef.current.value);
     inputRef.current.value = '';
   }
+  const oncClearSearch = () => {
+    setInput('');
+    inputRef.current.value = '';
+    }
   return (
     <div className='mx-8 sm:mx-16 xl:mx-24 relative'>
         <div className='text-center mt-20 mb-8'>
@@ -29,8 +33,10 @@ export default function Header() {
                 <button className='bg-primary text-white px-8 py-2 m-1.5 rounded hover:scale-105 transition-all cursor-pointer' type='submit'>Search</button>
             </form>
         </div>
-        <div>
-            
+        <div className='text-center' >
+            {input &&<button className='border font-light text-xs py-1 px-3 rounded-sm cursor-pointer hover:bg-gray-100 transition-all' onClick={oncClearSearch}>
+                Clear Search
+            </button>}
         </div>
         <img src={assets.gradientBackground} className='absolute -top-50 -z-1 opacity-50' alt="" />
 
