@@ -6,31 +6,67 @@ import Moment from 'moment';
 import footer from '../components/Footer';
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
+import { useAppContext } from '../context/AppContext';
+import toast from 'react-hot-toast';
 
 
 
 export default function Blog() {
   const { id } = useParams();
+
+  const {axios} = useAppContext();
+
+
   const [data, setData] = useState(null);
   const [comments, setComments] = useState([]);
   const [name, setName] = useState('');
-  const [comment, setComment] = useState([]);
-  const fetchBlogData = async () => {
-      const found = blog_data.find(item => item._id === id);
-      setData(found);
-    };
-  const fetchComments = async () => {
-      setComments(comments_data)
-    };
-  const addComment = (e) => {
+  const [content, setContent] = useState([]);
+const fetchBlogData = async () => {
+  try {
+    const { data } = await axios.get(`/api/blog/${id}`);
+    console.log("Blog response:", data);
+    if (data.success) {
+      setData(data.blog);
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+    toast.error("Failed to fetch blog");
+    console.error("Blog fetch error:", error);
+  }
+};
+
+
+const fetchComments = async () => {
+      try {
+        const {data} = await axios.post('/api/blog/comments',{blogID: id});
+        if (data.success) {
+          setComments(data.comments);
+        }
+        else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+};
+
+
+const addComment =async (e)=> {
       e.preventDefault();
-      // const name = e.target[0].value;
-      // const content = e.target[1].value;
-      // const newComment = {
-      //   name,
-      //   content,
-      //   createdAt: new Date().toISOString(),
-      // };
+      try {
+        const {data} = await axios.post('/api/blog/add-comment',{blog: id,name,content});
+        if (data.success) {
+          toast.success(data.message);
+          setName('');
+          setContent('');
+        }
+        else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
   }
     // depend on `id` so it runs when route changes
     useEffect(() => {
@@ -75,8 +111,8 @@ export default function Blog() {
       <div className='max-w-3xl mx-auto'>
         <p className='font-semibold mb-4 '> Add Your Comment </p>
         <form onSubmit={addComment} className='flex flex-col items-start gap-4 max-w-lg'>
-          <input onChange={() => setName(e.target.value)} value={name} type="text" className='w-full p-2 border border-gray-300 rounded outline-none ' required placeholder='Name' />
-          <textarea onChange={() => setComment(e.target.value)} value={name}  required className='w-full p-2 border border-gray-300 rounded outline-none h-48 ' placeholder='Comment'></textarea>
+          <input onChange={(e) => setName(e.target.value)} value={name} type="text" className='w-full p-2 border border-gray-300 rounded outline-none ' required placeholder='Name' />
+          <textarea onChange={(e) => setContent(e.target.value)} value={content}  required className='w-full p-2 border border-gray-300 rounded outline-none h-48 ' placeholder='Comment'></textarea>
           <button type='submit' className='bg-primary text-white rounded p-2 px-8 hover:scale-102 transition-all cursor-pointer'>Submit</button>
         </form>
       </div>
