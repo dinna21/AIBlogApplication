@@ -6,9 +6,6 @@ import { useAppContext } from '../context/AppContext';
 export default function Navbar() {
   const { token } = useAppContext();
   const navigate = useNavigate();
-
-
-
   return (
 
     <div className='flex justify-between items-center py-5 mx-8 sm:mx-20 xl:mx-32 cursor-pointer'>
