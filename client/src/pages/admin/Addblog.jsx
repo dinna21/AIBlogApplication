@@ -1,16 +1,52 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { assets, blogCategories } from '../../assets/assets'
 import Quill from 'quill'
+import { useAppContext } from '../../context/AppContext'
+import toast from 'react-hot-toast';
 export default function Addblog() {
+  const {axios} = useAppContext();
+  const [addingBlog, setAddingBlog] = useState(false);
+
+
+
+
   const editorRef = useRef(null)
   const quillRef = useRef(null)
   const [image,setImage] = useState(false)
   const [title,setTitle] = useState('')
   const [subTitle,setSubTitle] = useState('')
-  const [catogery,setCatogery] = useState('Startup')
+  const [category,setCatogery] = useState('Startup')
   const [isPublished,setIspublished] = useState(false)
   const onSubmitHandler = async (e) => {
-    e.preventDefault();
+    try {
+    e.preventDefault();  
+    setAddingBlog(true);
+    const blog = {
+      title,subTitle,
+      description: quillRef.current.root.innerHTML,
+      category,isPublished
+    }
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('blog', JSON.stringify(blog));
+    const {data} = await axios.post('/api/blog/add', formData)
+    if (data.success) {
+      toast.success(data.message);
+      setImage(false);
+      setTitle('');
+      quillRef.current.root.innerHTML = '';
+      setCatogery('Startup');
+    }
+    else {
+      toast.error(data.message);
+    }
+  }
+    catch (error) {
+      toast.error(error.message)
+    }finally {
+      setAddingBlog(false);
+    }
+
   }
   // for generating ai automated the blog discrioption 
   const generateContent = async (e) => {
@@ -91,10 +127,11 @@ export default function Addblog() {
       </div>
 
       <button 
+        disabled={addingBlog}
         className='mt-10 w-44 h-11 bg-primary hover:bg-primary-dark text-white rounded-lg shadow-md text-base font-medium transition-all duration-200 cursor-pointer' 
         type='submit'
       >
-        🚀 Add Blog
+        {addingBlog ? 'Adding...' : 'Add Blog'}
       </button>
     </div>
   </form>
