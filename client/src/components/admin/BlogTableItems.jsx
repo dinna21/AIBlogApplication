@@ -23,6 +23,21 @@ function BlogTableItems({blog,fetchBlogs,index}) {
         toast.error(error.message);
       }
   }
+  const togglePublish = async () => {
+    try {
+    const {data} = await axios.post('/api/blog/toggle-publish', {id: blog._id});
+    if (data.success) {
+      toast.success(data.message);
+      await fetchBlogs();
+    } else {
+      toast.error(data.message);
+    }
+      
+    } catch (error) {
+      toast.error(error.message);
+    }
+
+  }
     
   return (
     <tr className='border-y border-gray-300'> 
