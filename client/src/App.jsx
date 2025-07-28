@@ -26,7 +26,7 @@ export default function App() {
           <Route path="addBlog" element={<Addblog />} />
           <Route path="ListBlog" element={<ListBlog />} />
           <Route path="comments" element={<Comments />} />
-          <Route path="" element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
     </div>
