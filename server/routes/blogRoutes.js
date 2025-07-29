@@ -3,6 +3,7 @@ import {
   addBlog,
   addComment,
   deleteBlogByID,
+  generateContent,
   getAllBlogs,
   getBlogByID,
   getBlogComments,  
@@ -26,5 +27,6 @@ blogRouter.post('/toggle-publish', auth, togglePublish);
 
 // ✅ Dynamic route LAST
 blogRouter.get('/:blogID', getBlogByID);
+blogRouter.post('/generate',auth,generateContent);
 
 export default blogRouter;
