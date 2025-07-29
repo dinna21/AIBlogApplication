@@ -17,6 +17,7 @@ const blogRouter = express.Router();
 blogRouter.get('/all', getAllBlogs);
 blogRouter.post('/add-comment', addComment);
 blogRouter.post('/comments', getBlogComments);
+blogRouter
 
 // ✅ Then dynamic and protected routes
 blogRouter.post('/add', auth, upload.single("image"), addBlog);
