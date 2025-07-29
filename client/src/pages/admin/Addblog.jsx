@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import { assets, blogCategories } from '../../assets/assets'
 import Quill from 'quill'
 import { useAppContext } from '../../context/AppContext'
-import toast from 'react-hot-toast';
-export default function Addblog() {
+import {parse} from 'marked';
+import toast from 'react-hot-toast'
+export default function Addblog()
+{
   const {axios} = useAppContext();
   const [addingBlog, setAddingBlog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 
 
@@ -16,7 +19,30 @@ export default function Addblog() {
   const [title,setTitle] = useState('')
   const [subTitle,setSubTitle] = useState('')
   const [category,setCatogery] = useState('Startup')
-  const [isPublished,setIspublished] = useState(false)
+  const [isPublished,setIspublished] = useState(false);
+
+  const generateContent = async () =>
+  {
+    if(!title) return toast.error("Please enter a title for the blog");
+    try {
+      setLoading(true);
+      const {data} = await axios.post('/api/blog/generate', {prompt: title});
+      if (data.success) {
+        quillRef.current.root.innerHTML = parse(data.content);
+        toast.success("Content generated successfully");
+      }
+      else {
+        toast.error(data.message);
+      }
+      
+    } catch (error) {
+      toast.error(error.message);
+    }
+    finally {
+      setLoading(false);
+    }
+  }
+
   const onSubmitHandler = async (e) => {
     try {
     e.preventDefault();  
@@ -46,10 +72,6 @@ export default function Addblog() {
     }finally {
       setAddingBlog(false);
     }
-
-  }
-  // for generating ai automated the blog discrioption 
-  const generateContent = async (e) => {
 
   }
   useEffect(()=> {
@@ -96,6 +118,7 @@ export default function Addblog() {
       <div className='max-w-lg h-74 pb-16 pt-2 relative rounded-lg border border-gray-200 shadow-inner'>
         <div ref={editorRef} className='px-3 py-2'></div>
         <button 
+          disabled={loading}
           type='button' 
           className='absolute bottom-2 right-2 text-xs text-white bg-primary px-4 py-1.5 rounded-lg shadow hover:bg-primary-dark focus:ring-2 focus:ring-offset-1 focus:ring-primary transition-all duration-200 cursor-pointer' 
           onClick={generateContent}
